@@ -1,11 +1,15 @@
 from http.server import BaseHTTPRequestHandler
-from unittest import result
 from urllib import parse 
 import requests
 
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
+        """
+        1. serverless function handle with a GET http request with a given country name that responds with a string 
+        2. and handle with a GET http request with a given capital that responds with a string 
+        3. and handle with a GET http request with a given capital and country name  that responds with a string 
+        """
         s=self.path
         url_components=parse.urlsplit(s)
         query_string_list = parse.parse_qsl(url_components.query)
@@ -28,7 +32,7 @@ class handler(BaseHTTPRequestHandler):
             country=str(data[0]['name']['common'])
             message=f'{capital} is the capital of {country}.'
         else :
-            message="please provide me with a country name or its capital"
+            message="please provide a country name or its capital name"
 
         self.send_response(200)
         self.send_header('Content-type','text/plain')
